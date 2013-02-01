@@ -7,7 +7,7 @@ import cProfile
 
 #HOST = '95.138.176.230' # Pilgrim's Rackspace VM "Rack1"
 HOST = 'localhost'
-PORT = 3000
+PORT = 4000
 
 g_socketIO = None
 
@@ -37,25 +37,15 @@ class Namespace(BaseNamespace):
 def main():
     global g_socketIO
 
-    print "Listening to "+HOST+":"+str(PORT)
+    print "Client connecting to "+HOST+":"+str(PORT)
 
     g_socketIO = SocketIO(HOST, PORT, Namespace)
 
     print "Emitting adduser"
     g_socketIO.emit("adduser",socket.getfqdn()+";"+str(os.getpid()))
 
-    g_start_time = time.time()
-    if(len(sys.argv)<2):
-        print "Usage:",sys.argv[0]," S or L or SL"
-    if("S" in sys.argv[1]):
-        print "Starting speaking"
-        thread1 = threading.Thread(target=heartbeat_thread)
-        thread1.start()
-    if("L" in sys.argv[1]):
-        print "Starting listening"
-        g_socketIO.wait()
-    else:
-        time.sleep(60*60*24*365*100)
+    print "About to socketIO.wait()"
+    g_socketIO.wait()
 
 if __name__ == "__main__":
     main()
