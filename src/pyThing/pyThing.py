@@ -57,7 +57,6 @@ def instantiateThings(n):
 
 class Test(unittest.TestCase):
 
-
     def setUp(self):
         pass
 
